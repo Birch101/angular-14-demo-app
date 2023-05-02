@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+REST API
+
+Simple REST API returning film data from a Sqlite database. Entity Framework has been used in the code first style to generate the database.
+
+To create and run Entity Framework migration, run the following commands:
+
+- Add-Migration InitialCreate
+- Update-Database
