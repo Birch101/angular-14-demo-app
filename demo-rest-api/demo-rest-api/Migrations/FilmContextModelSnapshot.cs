@@ -124,7 +124,7 @@ namespace demo_rest_api.Migrations
 
                     b.HasIndex("FilmId");
 
-                    b.ToTable("FilmImage");
+                    b.ToTable("FilmImages");
                 });
 
             modelBuilder.Entity("demo_rest_api.Entities.FilmImage", b =>

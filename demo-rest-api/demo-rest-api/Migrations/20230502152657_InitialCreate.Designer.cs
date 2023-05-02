@@ -11,7 +11,7 @@ using demo_rest_api.Context;
 namespace demo_rest_api.Migrations
 {
     [DbContext(typeof(FilmContext))]
-    [Migration("20230502074205_InitialCreate")]
+    [Migration("20230502152657_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,7 +126,7 @@ namespace demo_rest_api.Migrations
 
                     b.HasIndex("FilmId");
 
-                    b.ToTable("FilmImage");
+                    b.ToTable("FilmImages");
                 });
 
             modelBuilder.Entity("demo_rest_api.Entities.FilmImage", b =>

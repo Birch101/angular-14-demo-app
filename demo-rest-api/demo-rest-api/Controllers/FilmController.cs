@@ -1,5 +1,5 @@
-using demo_rest_api.Entities;
-using demo_rest_api.Repository;
+using demo_rest_api.DTO;
+using demo_rest_api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace demo_rest_api.Controllers
@@ -10,39 +10,66 @@ namespace demo_rest_api.Controllers
   {
     private readonly ILogger<FilmController> _logger;
 
-    private IFilmRepository _filmRepository;
+    private IFilmService _filmService;
 
-    public FilmController(ILogger<FilmController> logger, IFilmRepository filmRepository)
+    public FilmController(ILogger<FilmController> logger, IFilmService filmService)
     {
       _logger = logger;
-      _filmRepository = filmRepository;
+      _filmService = filmService;
     }
 
+    /// <summary>
+    /// Retrieve a list of all films.
+    /// </summary>
+    /// <returns>List of all films</returns>
     [HttpGet]
-    public IEnumerable<Film> GetFilms()
+    public IEnumerable<FilmDTO> GetFilms()
     {
-      return _filmRepository.GetFilms();
+      return _filmService.GetFilms();
     }
 
-    [HttpGet]
+    /// <summary>
+    /// Search for films matching certain critera.
+    /// </summary>
+    /// <returns>Matching list of films</returns>
+    [HttpPost]
     [Route("search")]
-    public IEnumerable<Film> SearchFilms()
+    public IEnumerable<FilmDTO> SearchFilms([FromBody]FilmSearchDTO search)
     {
-      return _filmRepository.FilmSearch();
+      return _filmService.SearchFilms(search);
     }
 
+    /// <summary>
+    /// Add a film.
+    /// </summary>
+    /// <param name="film">File to add</param>
+    [HttpPost]
+    [Route("")]
+    public FilmDTO AddFilm(FilmDTO film)
+    {
+      return _filmService.AddFilm(film);
+    }
+
+    /// <summary>
+    /// Update a single film.
+    /// </summary>
+    /// <param name="film">Details of film to update</param>
     [HttpPatch]
     [Route("{id}")]
-    public void UpdateFilm(Film film)
+    public FilmDTO UpdateFilm(FilmDTO film)
     {
-      _filmRepository.UpdateFilm(film);
+      return _filmService.UpdateFilm(film);
     }
 
+    /// <summary>
+    /// Delete one film with matching id.
+    /// </summary>
+    /// <param name="id">Id of film to delete</param>
     [HttpDelete]
     [Route("{id}")]
     public void DeleteFilm(int id)
     {
-      _filmRepository.DeleteFilm(id);
+      _filmService.DeleteFilm(id);
     }
   }
 }
