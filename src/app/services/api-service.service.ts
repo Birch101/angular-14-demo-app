@@ -21,6 +21,16 @@ export class ApiServiceService {
     return this.http.get(url, this.httpOptions);
   }
 
+  addFilm(film: any): Observable<any> {
+    let url = environment.apiUrl + "/films";
+    return this.http.post(url, JSON.stringify(film), this.httpOptions);
+  }
+
+  updateFilm(film: any): Observable<any> {
+    let url = environment.apiUrl + "/films/" + film.id;
+    return this.http.patch(url, JSON.stringify(film), this.httpOptions);
+  }
+
   deleteFilm(filmId: number): Observable<any> {
     let url = environment.apiUrl + "/films/" + filmId;
     return this.http.delete(url);
