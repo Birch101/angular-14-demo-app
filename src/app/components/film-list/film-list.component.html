@@ -12,7 +12,7 @@
                 {{film.plot}}             
             </div>
             <div class="card-footer">
-                <a href="#" class="btn btn-primary">Details</a>
+                <button id="{{film.id}}" (click)="onDelete(this.film.id)" class="btn btn-danger">Delete</button>
             </div>
         </div>
 

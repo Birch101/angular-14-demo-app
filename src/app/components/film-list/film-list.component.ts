@@ -13,16 +13,32 @@ export class FilmListComponent implements OnInit {
   constructor(private apiService: ApiServiceService) { }
 
   ngOnInit(): void {
-   this.apiService.getFilms()
-    .subscribe(
-      response => {
-        this.films = response;
-        console.log(response);
-        //this.submitted = true;
-      },
-      error => {
-        console.log(error);
-      });
+    this.getFilms();
+  }
+
+  getFilms() {
+    this.apiService.getFilms()
+      .subscribe(
+        response => {
+          this.films = response;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  onDelete(filmId: any): void {
+
+    this.apiService.deleteFilm(filmId)
+      .subscribe(
+        response => {
+          this.getFilms();
+        },
+        error => {
+          console.log(error);
+        });
+
+
   }
 
 }

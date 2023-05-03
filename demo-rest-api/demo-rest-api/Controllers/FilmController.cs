@@ -67,7 +67,7 @@ namespace demo_rest_api.Controllers
     /// <param name="id">Id of film to delete</param>
     [HttpDelete]
     [Route("{id}")]
-    public void DeleteFilm(int id)
+    public void DeleteFilm([FromRoute] int id)
     {
       _filmService.DeleteFilm(id);
     }

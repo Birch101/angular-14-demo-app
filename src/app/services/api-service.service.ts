@@ -20,4 +20,9 @@ export class ApiServiceService {
     let url = environment.apiUrl + "/films";
     return this.http.get(url, this.httpOptions);
   }
+
+  deleteFilm(filmId: number): Observable<any> {
+    let url = environment.apiUrl + "/films/" + filmId;
+    return this.http.delete(url);
+  }
 }

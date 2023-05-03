@@ -1,19 +1,11 @@
 using demo_rest_api.Repository;
 using demo_rest_api.Services;
 
+var allowedPolicy = "_myPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-var allowedPolicy = "_myPolicy";
-
 builder.Services.AddCors(options =>
 {
   options.AddPolicy(name: allowedPolicy,
@@ -22,8 +14,16 @@ builder.Services.AddCors(options =>
                       // TODO: this is not secure
                       policy.WithOrigins("*");
                       policy.AllowAnyHeader();
+                      policy.AllowAnyMethod();
                     });
 });
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IFilmRepository, FilmRepository>();
 builder.Services.AddScoped<IFilmService, FilmService>();
@@ -38,7 +38,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 
 app.UseCors(allowedPolicy);
 
