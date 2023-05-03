@@ -12,6 +12,19 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+var allowedPolicy = "_myPolicy";
+
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy(name: allowedPolicy,
+                    policy =>
+                    {
+                      // TODO: this is not secure
+                      policy.WithOrigins("*");
+                      policy.AllowAnyHeader();
+                    });
+});
+
 builder.Services.AddScoped<IFilmRepository, FilmRepository>();
 builder.Services.AddScoped<IFilmService, FilmService>();
 
@@ -25,6 +38,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
+app.UseCors(allowedPolicy);
 
 app.UseAuthorization();
 
