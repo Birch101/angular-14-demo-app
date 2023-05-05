@@ -1,36 +1,19 @@
 # Angular14DemoApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.11.
+## Overview
 
-## Development server
+This is a simple project to allow film data to be created, read, updated and deleted. It consists of the following parts:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- SQLite database generated using Entity Framework 'code first' approach. 
+- C# REST API connecting to a SQLite database.
+- Angular web application connecting to the REST API to create, read, update and delete data.
 
-## Code scaffolding
+## Running
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The REST API can be run from Visual Studio and should be started before running the Angular application. 
 
-## Build
+To run the Angular applicaton first run the 'npm install' command followed by the 'ng serve' command - this will run at localhost:4200. Note if the API runs on a port other than '44376' you will need to update the 'apiUrl' config in the 'environment.development.ts' file to point at the same port where the API is running.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Database creation
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
-REST API
-
-Simple REST API returning film data from a Sqlite database. Entity Framework has been used in the code first style to generate the database.
-
-To create and run Entity Framework migration, run the following commands:
-
-- Add-Migration InitialCreate
-- Update-Database
+The SQLite database is checked in with the code, but if required could be generated again by running the 'update-database' command from within Visual Studio.
