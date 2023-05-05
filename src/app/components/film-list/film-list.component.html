@@ -15,11 +15,28 @@
                 <p *ngIf="title.invalid && (title.dirty || title.touched)">
                     <small style="color:red">Title is required</small>
                 </p>
-    
+                <label for="year">Year</label>
+                <div class="input-group">
+                    <input id="year" required min=0 max=9999 maxlength=4 class="form-control" type="number"
+                        [formControl]="year" />
+                </div>
+                <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)">
+                    <small style="color:red">Year is required</small>
+                </p>
+                <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)">
+                    <small style="color:red">Year must be between 0 and 9999</small>
+                </p>
+                <label for="plot">Plot</label>
+                <div class="input-group">
+                    <textarea id="plot" required maxlength="200" class="form-control" type="text" [formControl]="plot"> </textarea>
+                </div>
+                <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
+                    <small style="color:red">Plot is required</small>
+                </p>
             </div>
         </div>
         <div class="card-footer text-end">
-            <button (click)="onAdd()" [disabled]="title.invalid" class="btn btn-primary">Save</button>      
+            <button (click)="onAdd()" [disabled]="title.invalid || year.invalid || plot.invalid" class="btn btn-primary">Save</button>
         </div>
     </div>
 
@@ -27,14 +44,17 @@
         <div class="card film-card m-2" style="width: 18rem; min-height: 36em;">
             <div class="card-header" style="min-height: 5.5em">
                 <h5>{{film.title}} ({{film.year}})</h5>
-              </div>
-            <img class="card-img-top" src="{{film.images[0].imageURL}}" alt="Card image cap" style="min-height: 190px; max-height: 190px">
+            </div>
+            <img class="card-img-top" src="{{film.images[0].imageURL}}" alt="Card image cap"
+                style="min-height: 190px; max-height: 190px">
             <div class="card-body">
-                {{film.plot}}             
+                {{film.plot}}
             </div>
             <div class="card-footer text-end">
-                <button id="{{film.id}}" (click)="onUpdate(this.film)" class="btn btn-primary float-right update-button">Update</button>
-                <button id="{{film.id}}" (click)="onDelete(this.film.id)" class="btn btn-danger float-right">Delete</button>
+                <button id="{{film.id}}" (click)="onUpdate(this.film)"
+                    class="btn btn-primary float-right update-button">Update</button>
+                <button id="{{film.id}}" (click)="onDelete(this.film.id)"
+                    class="btn btn-danger float-right">Delete</button>
             </div>
         </div>
 

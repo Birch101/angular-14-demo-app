@@ -15,8 +15,9 @@ export class FilmListComponent implements OnInit {
   //** List of films to display */
   filmsList: any;
 
-  // TODO: Needs validation
   title = new FormControl('');
+  year = new FormControl('');
+  plot = new FormControl('');
 
   //** Empty anonymous film object - used when inserting new record */
   emptyFilm = {
@@ -72,18 +73,16 @@ export class FilmListComponent implements OnInit {
 
   //** Open the modal to prompt for title and on success refresh the film list */
   onAdd(): void {
-    if (this.title.value !== null) {
-      // use our title value in the film we will write
-      this.emptyFilm.title = this.title.value?.toString();
+    if (this.title.value !== null && this.year !== null && this.plot !== null) {
+      this.emptyFilm = {...this.emptyFilm, title: this.title.value?.toString(), year: this.year.value?.toString() ?? "", plot: this.plot.value?.toString() ?? ""}
 
       // call the api service to write this film away
       this.apiService.addFilm(this.emptyFilm)
         .subscribe(
           response => {
-            this.toastr.success("Film added successfully!", "Success");
-            // clear the field
-            this.title.setValue('');
-            // close the modal
+            this.toastr.success("Film added successfully!", "Success");         
+            this. resetFields();
+            // refresh the film list
             this.getFilms();
           },
           error => {
@@ -113,6 +112,22 @@ export class FilmListComponent implements OnInit {
           this.toastr.error("Failed to delete film.", "Failure");
           console.log(error);
         });
+  }
+
+  //** Reset the fields text and validation errors. */
+  resetFields() {
+    this.title.setValue('');
+    this.year.setValue('');
+    this.plot.setValue('');
+
+    this.title.markAsPristine();
+    this.title.setErrors(null);
+
+    this.year.markAsPristine();
+    this.year.setErrors(null);
+
+    this.plot.markAsPristine();
+    this.plot.setErrors(null);
   }
 
 }
