@@ -98,6 +98,14 @@ export class FilmListComponent implements OnInit {
 
     // pass the selected film to the modal
     modal.componentInstance.filmToUpdate = film;
+
+    modal.result.then(
+      (result) => { },
+      (reason) => {
+        this.getFilms()
+      },
+    );
+
   }
 
   //** Delete the selected film and then refesh the film list */
