@@ -11,10 +11,28 @@
             <p *ngIf="title.invalid && (title.dirty || title.touched)">
                 <small style="color:red">Title is required</small>
             </p>
+            <label for="year">Year</label>
+            <div class="input-group">
+                <input id="year" required min=0 max=9999 maxlength=4 class="form-control" type="number"
+                    [formControl]="year" />
+            </div>
+            <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)">
+                <small style="color:red">Year is required</small>
+            </p>
+            <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)">
+                <small style="color:red">Year must be between 0 and 9999</small>
+            </p>
+            <label for="plot">Plot</label>
+            <div class="input-group">
+                <textarea id="plot" required maxlength="200" class="form-control" type="text" [formControl]="plot"> </textarea>
+            </div>
+            <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
+                <small style="color:red">Plot is required</small>
+            </p>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" [disabled]="title.invalid" class="btn btn-primary" (click)="onSave()">Save</button>
+    <button type="button" [disabled]="title.invalid || year.invalid || plot.invalid" class="btn btn-primary" (click)="onSave()">Save</button>
     <button type="button" class="btn btn-danger" (click)="onClose()">Close</button>
 </div>

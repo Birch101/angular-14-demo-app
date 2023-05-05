@@ -14,8 +14,9 @@ export class FilmModalComponent implements OnInit {
   //** Passed in film to update */
   @Input() public filmToUpdate: any;
 
-  // TODO: Needs validation
   public title = new FormControl('');
+  public year = new FormControl('');
+  public plot = new FormControl('');
 
   constructor(private modalService: NgbModal, private apiService: ApiService, private toastr: ToastrService) {}
 
@@ -23,13 +24,18 @@ export class FilmModalComponent implements OnInit {
   ngOnInit() {
     // set the title to the passed in value
     this.title.setValue(this.filmToUpdate?.title);
+    this.year.setValue(this.filmToUpdate?.year);
+    this.plot.setValue(this.filmToUpdate?.plot);
+
     this.title.markAsPristine();
+    this.year.markAsPristine();
+    this.plot.markAsPristine();
   }
 
   //** Save away changes and close the modal */
   onSave() {
     // set the title to the entered value
-    this.filmToUpdate.title = this.title.value;
+    this.filmToUpdate = {...this.filmToUpdate, title: this.title.value?.toString(), year: this.year.value?.toString() ?? "", plot: this.plot.value?.toString() ?? ""}
 
     this.apiService.updateFilm(this.filmToUpdate)
       .subscribe(
