@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
@@ -8,60 +9,37 @@ import { ApiService } from 'src/app/services/api-service.service';
   templateUrl: './film-modal.component.html',
   styleUrls: ['./film-modal.component.css']
 })
-export class FilmModalComponent {
+export class FilmModalComponent implements OnInit {
 
-  title = new FormControl('');
+  //** Passed in film to update */
+  @Input() public filmToUpdate: any;
 
-  constructor(private modalService: NgbModal, private apiService: ApiService) { }
+  // TODO: Needs validation
+  public title = new FormControl('');
 
-  // anonymous film object
-  emptyFilm = {
-    id: "0",
-    title: "",
-    year: "",
-    rated: "",
-    released: "",
-    runtime: "",
-    genre: "",
-    director: "",
-    writer: "",
-    actors: "",
-    plot: "",
-    language: "",
-    country: "",
-    awards: "",
-    poster: "",
-    metascore: "",
-    imdbRating: "",
-    imdbVotes: "",
-    imdbID: "",
-    type: "",
-    response: "",
-    images: [
-      {
-        "id": 0,
-        "imageURL": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Nicolas_Cage_Deauville_2013.jpg/220px-Nicolas_Cage_Deauville_2013.jpg"
-      }
-    ]
-  };
+  constructor(private modalService: NgbModal, private apiService: ApiService, private toastr: ToastrService) {}
+
+  //** Display title of film being updated */
+  ngOnInit() {
+    // set the title to the passed in value
+    this.title.setValue(this.filmToUpdate?.title);
+  }
 
   //** Save away changes and close the modal */
   onSave() {
-    if (this.title.value !== null) {
-      // use our title value in the film we will write
-      this.emptyFilm.title = this.title.value?.toString();
+    // set the title to the entered value
+    this.filmToUpdate.title = this.title.value;
 
-      // call the api service to write this film away
-      this.apiService.addFilm(this.emptyFilm)
-        .subscribe(
-          response => {
-            // close the modal
-            this.modalService.dismissAll();
-          },
-          error => {
-            console.log(error);
-          });
-    }
+    this.apiService.updateFilm(this.filmToUpdate)
+      .subscribe(
+        response => {
+          this.toastr.success("Film updated successfully!", "Success");
+          this.modalService.dismissAll();
+        },
+        error => {
+          this.toastr.error("Failed to update film.", "Failure");
+          console.log(error);
+        });
   }
 
 }

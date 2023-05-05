@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import * as moment from 'moment';
 import { ApiService } from 'src/app/services/api-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
+import { FilmModalComponent } from '../film-modal/film-modal.component';
 
 @Component({
   selector: 'app-film-list',
@@ -12,8 +12,13 @@ import { FormControl } from '@angular/forms';
 })
 export class FilmListComponent implements OnInit {
 
-  films: any;
+  //** List of films to display */
+  filmsList: any;
 
+  // TODO: Needs validation
+  title = new FormControl('');
+
+  //** Empty anonymous film object - used when inserting new record */
   emptyFilm = {
     id: "0",
     title: "",
@@ -46,8 +51,7 @@ export class FilmListComponent implements OnInit {
 
   constructor(private apiService: ApiService, private modalService: NgbModal, private toastr: ToastrService) { }
 
-  title = new FormControl('');
-
+  //** Load films on initialization */
   ngOnInit(): void {
     // initial load of films
     this.getFilms();
@@ -58,9 +62,10 @@ export class FilmListComponent implements OnInit {
     this.apiService.getFilms()
       .subscribe(
         response => {
-          this.films = response;
+          this.filmsList = response;
         },
         error => {
+          this.toastr.error("Failed to display films.", "Failure");
           console.log(error);
         });
   }
@@ -90,25 +95,14 @@ export class FilmListComponent implements OnInit {
 
   //** Update film with demo data */
   onUpdate(film: any) {
+    const modal = this.modalService.open(FilmModalComponent);
 
-    // TODO: quick way to show update working, but isn't taking any user input
-    film.title = film.title + " updated at: " + moment(new Date()).format('DD-MM-YY HH:mm:ss')
-
-    this.apiService.updateFilm(film)
-      .subscribe(
-        response => {
-          this.toastr.success("Film updated successfully!", "Success");
-          this.getFilms();
-        },
-        error => {
-          this.toastr.error("Failed to update film.", "Failure");
-          console.log(error);
-        });
+    // pass the selected film to the modal
+    modal.componentInstance.filmToUpdate = film;
   }
 
   //** Delete the selected film and then refesh the film list */
   onDelete(filmId: any): void {
-
     this.apiService.deleteFilm(filmId)
       .subscribe(
         response => {
