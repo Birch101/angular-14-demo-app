@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
-import { ApiServiceService } from 'src/app/services/api-service.service';
-import { FilmModalComponent } from '../film-modal/film-modal.component';
+import { ApiService } from 'src/app/services/api-service.service';
+import { ToastrService } from 'ngx-toastr';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-film-list',
@@ -13,28 +14,28 @@ export class FilmListComponent implements OnInit {
 
   films: any;
 
-  demoFilm = {
+  emptyFilm = {
     id: "0",
-    title: "Demo Film",
-    year: "2001",
-    rated: "PG-13",
-    released: "2001",
-    runtime: "139 mins",
-    genre: "horror",
-    director: "Nicolas Cage",
-    writer: "Nicolas Cage",
-    actors: "Nicolas Cage",
-    plot: "Nicolas Cage being Nicolas Cage",
-    language: "English",
-    country: "UK",
-    awards: "None",
-    poster: "None",
-    metascore: "100",
-    imdbRating: "10",
-    imdbVotes: "10000",
-    imdbID: "abc",
-    type: "movie",
-    response: "True",
+    title: "",
+    year: "",
+    rated: "",
+    released: "",
+    runtime: "",
+    genre: "",
+    director: "",
+    writer: "",
+    actors: "",
+    plot: "",
+    language: "",
+    country: "",
+    awards: "",
+    poster: "",
+    metascore: "",
+    imdbRating: "",
+    imdbVotes: "",
+    imdbID: "",
+    type: "",
+    response: "",
     images: [
       {
         "id": 0,
@@ -43,7 +44,9 @@ export class FilmListComponent implements OnInit {
     ]
   };
 
-  constructor(private apiService: ApiServiceService, private modalService: NgbModal) { }
+  constructor(private apiService: ApiService, private modalService: NgbModal, private toastr: ToastrService) { }
+
+  title = new FormControl('');
 
   ngOnInit(): void {
     // initial load of films
@@ -64,12 +67,25 @@ export class FilmListComponent implements OnInit {
 
   //** Open the modal to prompt for title and on success refresh the film list */
   onAdd(): void {
-    this.modalService.open(FilmModalComponent).result.then(
-      (result) => { },
-      (reason) => {
-        this.getFilms()
-      },
-    );
+    if (this.title.value !== null) {
+      // use our title value in the film we will write
+      this.emptyFilm.title = this.title.value?.toString();
+
+      // call the api service to write this film away
+      this.apiService.addFilm(this.emptyFilm)
+        .subscribe(
+          response => {
+            this.toastr.success("Film added successfully!", "Success");
+            // clear the field
+            this.title.setValue('');
+            // close the modal
+            this.getFilms();
+          },
+          error => {
+            this.toastr.error("Failed to add film.", "Failure");
+            console.log(error);
+          });
+    }
   }
 
   //** Update film with demo data */
@@ -81,9 +97,11 @@ export class FilmListComponent implements OnInit {
     this.apiService.updateFilm(film)
       .subscribe(
         response => {
+          this.toastr.success("Film updated successfully!", "Success");
           this.getFilms();
         },
         error => {
+          this.toastr.error("Failed to update film.", "Failure");
           console.log(error);
         });
   }
@@ -94,9 +112,11 @@ export class FilmListComponent implements OnInit {
     this.apiService.deleteFilm(filmId)
       .subscribe(
         response => {
+          this.toastr.success("Film deleted successfully!", "Success");
           this.getFilms();
         },
         error => {
+          this.toastr.error("Failed to delete film.", "Failure");
           console.log(error);
         });
   }

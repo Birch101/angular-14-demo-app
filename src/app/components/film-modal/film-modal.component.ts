@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ApiServiceService } from 'src/app/services/api-service.service';
+import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
   selector: 'app-film-modal',
@@ -12,7 +12,7 @@ export class FilmModalComponent {
 
   title = new FormControl('');
 
-  constructor(private modalService: NgbModal, private apiService: ApiServiceService) { }
+  constructor(private modalService: NgbModal, private apiService: ApiService) { }
 
   // anonymous film object
   emptyFilm = {
