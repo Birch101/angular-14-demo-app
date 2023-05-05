@@ -23,6 +23,7 @@ export class FilmModalComponent implements OnInit {
   ngOnInit() {
     // set the title to the passed in value
     this.title.setValue(this.filmToUpdate?.title);
+    this.title.markAsPristine();
   }
 
   //** Save away changes and close the modal */
@@ -40,6 +41,11 @@ export class FilmModalComponent implements OnInit {
           this.toastr.error("Failed to update film.", "Failure");
           console.log(error);
         });
+  }
+
+  //** Close the modal. */
+  onClose() {
+    this.modalService.dismissAll();
   }
 
 }

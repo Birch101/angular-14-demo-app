@@ -6,11 +6,15 @@
         <div class="mb-3">
             <label for="title">Title</label>
             <div class="input-group">
-                <input id="title" class="form-control" type="text" [formControl]="title" />
+                <input required id="title" class="form-control" type="text" [formControl]="title" />
             </div>
+            <p *ngIf="title.invalid && (title.dirty || title.touched)">
+                <small style="color:red">Title is required</small>
+            </p>
         </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSave()">Save</button>
+    <button type="button" [disabled]="title.invalid" class="btn btn-primary" (click)="onSave()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="onClose()">Close</button>
 </div>
