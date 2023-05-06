@@ -87,6 +87,10 @@ describe('FilmListComponent', () => {
       expect(component.title.pristine).toBeTrue();
       expect(component.year.pristine).toBeTrue();
       expect(component.plot.pristine).toBeTrue();
+
+      expect(component.title.untouched).toBeTrue();
+      expect(component.year.untouched).toBeTrue();
+      expect(component.plot.untouched).toBeTrue();
     });
   })
 });

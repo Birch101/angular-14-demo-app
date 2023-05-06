@@ -132,13 +132,11 @@ export class FilmListComponent implements OnInit {
     this.plot.setValue('');
 
     this.title.markAsPristine();
-    this.title.setErrors(null);
-
+    this.title.markAsUntouched();
     this.year.markAsPristine();
-    this.year.setErrors(null);
-
+    this.year.markAsUntouched();
     this.plot.markAsPristine();
-    this.plot.setErrors(null);
+    this.plot.markAsUntouched();
   }
 
 }
