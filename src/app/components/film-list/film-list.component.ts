@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { FilmModalComponent } from '../film-modal/film-modal.component';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-film-list',
@@ -13,7 +14,9 @@ import { FilmModalComponent } from '../film-modal/film-modal.component';
 export class FilmListComponent implements OnInit {
 
   //** List of films to display */
-  filmsList: any;
+  filmsList: any[] = [];
+
+  searchText: any;
 
   title = new FormControl('');
   year = new FormControl('');

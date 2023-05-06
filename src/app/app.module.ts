@@ -7,16 +7,18 @@ import { FilmListComponent } from './components/film-list/film-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { FilmModalComponent } from './components/film-modal/film-modal.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     FilmListComponent,
-    FilmModalComponent
+    FilmModalComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,9 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     CommonModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FormsModule
+    //FilterPipe
   ],
   providers: [],
   bootstrap: [AppComponent]

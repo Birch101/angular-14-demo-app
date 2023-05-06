@@ -9,7 +9,7 @@
                 <input required id="title" class="form-control" type="text" [formControl]="title" />
             </div>
             <p *ngIf="title.invalid && (title.dirty || title.touched)">
-                <small style="color:red">Title is required</small>
+                <small class="validation-error-text">Title is required</small>
             </p>
             <label for="year">Year</label>
             <div class="input-group">
@@ -17,17 +17,17 @@
                     [formControl]="year" />
             </div>
             <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)">
-                <small style="color:red">Year is required</small>
+                <small class="validation-error-text">Year is required</small>
             </p>
             <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)">
-                <small style="color:red">Year must be between 0 and 9999</small>
+                <small class="validation-error-text">Year must be between 0 and 9999</small>
             </p>
             <label for="plot">Plot</label>
             <div class="input-group">
                 <textarea id="plot" required maxlength="300" class="form-control" type="text" [formControl]="plot"> </textarea>
             </div>
             <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
-                <small style="color:red">Plot is required</small>
+                <small class="validation-error-text">Plot is required</small>
             </p>
         </div>
     </form>
