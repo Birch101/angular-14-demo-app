@@ -31,7 +31,7 @@ jobs:
         run: | 
           dir
           cd dist
-          dir
+          cd angular-14-demo-app
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
