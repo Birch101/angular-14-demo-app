@@ -28,7 +28,10 @@ jobs:
           npm run test --if-present
 
       - name: list directories
-        run: dir
+        run: | 
+          dir
+          cd dist
+          dir
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
