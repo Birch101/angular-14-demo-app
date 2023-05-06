@@ -24,7 +24,7 @@
             </p>
             <label for="plot">Plot</label>
             <div class="input-group">
-                <textarea id="plot" required maxlength="200" class="form-control" type="text" [formControl]="plot"> </textarea>
+                <textarea id="plot" required maxlength="300" class="form-control" type="text" [formControl]="plot"> </textarea>
             </div>
             <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
                 <small style="color:red">Plot is required</small>
