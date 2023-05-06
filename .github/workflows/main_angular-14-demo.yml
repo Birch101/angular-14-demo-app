@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: /**/angular-14-demo-app
 
   deploy:
     runs-on: ubuntu-latest
