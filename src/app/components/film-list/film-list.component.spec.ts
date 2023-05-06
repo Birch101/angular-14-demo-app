@@ -4,7 +4,8 @@ import { FilmListComponent } from './film-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgControl, ReactiveFormsModule } from '@angular/forms';
+import { FilterPipe } from 'src/app/pipes/filter.pipe';
 
 describe('FilmListComponent', () => {
   let component: FilmListComponent;
@@ -15,10 +16,10 @@ describe('FilmListComponent', () => {
     mockToastrService = jasmine.createSpyObj(['success', 'error']);
 
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HttpClientModule, ReactiveFormsModule],
-      declarations: [ FilmListComponent ],
+      imports: [HttpClientTestingModule, HttpClientModule, ReactiveFormsModule, FormsModule],
+      declarations: [ FilmListComponent, FilterPipe ],
       providers: [
-        {provide: ToastrService, useValue: mockToastrService}
+        {provide: ToastrService, useValue: mockToastrService}, NgControl
       ]
     })
     .compileComponents();
