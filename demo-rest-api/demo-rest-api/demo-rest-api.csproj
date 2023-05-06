@@ -26,4 +26,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SampleData\films.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
