@@ -23,7 +23,10 @@ jobs:
           include-prerelease: true
 
       - name: Change directory
-        run: cd demo-rest-api
+        run: |
+          dir
+          cd demo-rest-api
+          dir
       
       - name: Build with dotnet
         run: dotnet build --configuration Release
