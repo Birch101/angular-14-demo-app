@@ -30,7 +30,6 @@ import { FilterPipe } from './pipes/filter.pipe';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FormsModule
-    //FilterPipe
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -84,7 +84,7 @@ export class FilmListComponent implements OnInit {
         .subscribe(
           response => {
             this.toastr.success("Film added successfully!", "Success");         
-            this. resetFields();
+            this.resetFields();
             // refresh the film list
             this.getFilms();
           },

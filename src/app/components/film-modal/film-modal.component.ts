@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService, ToastrModule } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
@@ -59,7 +59,7 @@ export class FilmModalComponent implements OnInit {
 
     // For a series pick out the first year in a '2001 - 2002' type string
     if (this.filmToUpdate?.type.toLowerCase() === 'series') {
-        this.year.setValue(this.extractYearValue(this.filmToUpdate.year.toString()));
+      this.year.setValue(this.extractYearValue(this.filmToUpdate.year.toString()));
     }
     else {
       this.year.setValue(this.filmToUpdate?.year);
@@ -86,12 +86,13 @@ export class FilmModalComponent implements OnInit {
   //** Extract the first year in a '2001-2002' type year range string or return an empty string */
   // TODO: move this to somewhere shared
   extractYearValue(yearString: string) {
-    var match = yearString.match(/\d*/g);
+    if (yearString) {
+      var match = yearString.match(/\d*/g);
 
-    if (match !== null && match.length > 0) {
-      return match[0];
+      if (match !== null && match.length > 0) {
+        return match[0];
+      }
     }
-
     return "";
   }
 

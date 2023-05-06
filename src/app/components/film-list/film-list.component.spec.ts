@@ -6,20 +6,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from 'src/app/pipes/filter.pipe';
+import { ApiService } from 'src/app/services/api-service.service';
+import { MockApiService } from '../../test/mock-api-service.service'
 
 describe('FilmListComponent', () => {
   let component: FilmListComponent;
   let fixture: ComponentFixture<FilmListComponent>;
-  let mockToastrService;
-
+  let mockToastrService = jasmine.createSpyObj(['success', 'error'])
+  let mockApiService = new MockApiService();
+  
   beforeEach(async () => {
-    mockToastrService = jasmine.createSpyObj(['success', 'error']);
-
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, HttpClientModule, ReactiveFormsModule, FormsModule],
       declarations: [ FilmListComponent, FilterPipe ],
       providers: [
-        {provide: ToastrService, useValue: mockToastrService}, NgControl
+        {provide: ToastrService, useValue: mockToastrService}, 
+        {provide: ApiService, useValue: mockApiService},
+        NgControl
       ]
     })
     .compileComponents();
@@ -32,4 +35,58 @@ describe('FilmListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('getFilms', () => {
+    it('', () => {
+      component.getFilms();
+
+      expect(component).toBeTruthy();
+    });
+  })
+
+  describe('onAdd', () => {
+    it('ToastrService called on successful add', () => {   
+      component.onAdd();
+
+      expect(mockToastrService.success).toHaveBeenCalled();
+
+      expect(component).toBeTruthy();
+    });
+  })
+
+  describe('onUpdate', () => {
+    it('ToastrService called on successful update', () => {
+      component.onUpdate(null);
+
+      expect(component).toBeTruthy();
+    });
+  })
+
+  describe('onDelete', () => {
+    it('ToastrService called on successful delete', () => {
+      component.onDelete(null);
+
+      expect(mockToastrService.success).toHaveBeenCalled();
+
+      expect(component).toBeTruthy();
+    });
+  })
+
+  describe('resetFields', () => {
+    it('Form controls should all be reset', () => {
+      component.title.setValue('Test');
+      component.year.setValue('2001');
+      component.plot.setValue('This is the plot');
+
+      component.resetFields();
+
+      expect(component.title.value).toBe('');
+      expect(component.year.value).toBe('');
+      expect(component.plot.value).toBe('');
+
+      expect(component.title.pristine).toBeTrue();
+      expect(component.year.pristine).toBeTrue();
+      expect(component.plot.pristine).toBeTrue();
+    });
+  })
 });
