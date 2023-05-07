@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Film } from 'src/app/models/film-model';
 import { ApiService } from 'src/app/services/api-service.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { ApiService } from 'src/app/services/api-service.service';
 export class FilmModalComponent implements OnInit {
 
   //** Passed in film to update */
-  @Input() public filmToUpdate: any;
+  @Input() public filmToUpdate: Film;
 
   public title = new FormControl('');
   public year = new FormControl('');
@@ -30,8 +31,8 @@ export class FilmModalComponent implements OnInit {
     // set the title to the entered value
     this.filmToUpdate = {
       ...this.filmToUpdate,
-      title: this.title.value?.toString(),
-      year: this.constructYearValue(this.filmToUpdate.type, this.year.value?.toString()),
+      title: this.title.value?.toString() ?? "",
+      year: this.constructYearValue(this.filmToUpdate.type, this.year.value?.toString() ?? ""),
       plot: this.plot.value?.toString() ?? ""
     }
 
@@ -74,7 +75,7 @@ export class FilmModalComponent implements OnInit {
 
   //** Construct an appropriate year string based on if it is a series or not */
   // TODO: move this to somewhere shared
-  constructYearValue(type: any, year: any) {
+  constructYearValue(type: string, year: string) {
     if (type.toLowerCase() === 'series') {
       // series year return in format of '2001-'
       return this.extractYearValue(year).toString() + "-" ?? ""

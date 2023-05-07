@@ -16,7 +16,7 @@
             <div class="mb-3">
                 <label for="title">Title</label>
                 <div class="input-group">
-                    <input id="title" required class="form-control" type="text" [formControl]="title" />
+                    <input id="title" required maxlength=100 class="form-control" type="text" [formControl]="title" />
                 </div>
                 <p *ngIf="title.invalid && (title.dirty || title.touched)">
                     <small class="validation-error-text">Title is required</small>
@@ -34,7 +34,7 @@
                 </p>
                 <label for="plot">Plot</label>
                 <div class="input-group">
-                    <textarea id="plot" required maxlength="200" class="form-control" type="text" [formControl]="plot"> </textarea>
+                    <textarea id="plot" required maxlength="300" class="form-control" type="text" [formControl]="plot"> </textarea>
                 </div>
                 <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
                     <small class="validation-error-text">Plot is required</small>
@@ -42,24 +42,24 @@
             </div>
         </div>
         <div class="card-footer text-end">
-            <button (click)="onAdd()" [disabled]="title.invalid || year.invalid || plot.invalid" class="btn btn-primary">Save</button>
+            <button (click)="onAdd()" [disabled]="title.invalid || year.invalid || plot.invalid" class="btn btn-primary"><fa-icon class="icon" [icon]="faFloppyDisk"></fa-icon>Save</button>
         </div>
     </div>
 
     <div *ngFor="let film of filmsList | filter: searchText">
         <div class="card film-card m-2">
             <div class="card-header film-card-header">
-                <h5>{{film.title}} ({{film.year}})</h5>
+                <h5 class="film-title-text-truncate" ngbTooltip="{{film.title}} ({{film.year}})">{{film.title}} ({{film.year}})</h5>
             </div>
-            <img class="card-img-top film-card-image" src="{{film.images[0].imageURL}}" alt="Card image cap">
-            <div class="card-body">
+            <img class="card-img-top film-card-image" src="{{film.images !== null && film.images !== undefined && film.images.length > 0 ? film.images[0].imageURL : ''}}" alt="Film image placeholder">
+            <div class="card-body film-card-plot film-plot-text-truncate" [ngbTooltip]="(film.plot.length > 260 ? film.plot : '')">
                 {{film.plot}}
             </div>
             <div class="card-footer text-end">
                 <button id="{{film.id}}" (click)="onUpdate(this.film)"
-                    class="btn btn-primary float-right update-button">Update</button>
+                    class="btn btn-primary float-right update-button"><fa-icon class="icon" [icon]="faPenToSquare"></fa-icon>Update</button>
                 <button id="{{film.id}}" (click)="onDelete(this.film.id)"
-                    class="btn btn-danger float-right">Delete</button>
+                    class="btn btn-danger float-right"><fa-icon class="icon" [icon]="faTrash"></fa-icon>Delete</button>
             </div>
         </div>
 

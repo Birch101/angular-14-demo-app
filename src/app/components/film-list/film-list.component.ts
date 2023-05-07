@@ -4,7 +4,10 @@ import { ApiService } from 'src/app/services/api-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormControl } from '@angular/forms';
 import { FilmModalComponent } from '../film-modal/film-modal.component';
-import { FilterPipe } from '../../pipes/filter.pipe';
+import { Film } from 'src/app/models/film-model';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-film-list',
@@ -14,44 +17,17 @@ import { FilterPipe } from '../../pipes/filter.pipe';
 export class FilmListComponent implements OnInit {
 
   //** List of films to display */
-  filmsList: any[] = [];
+  filmsList: Film[] = [];
 
-  searchText: any;
+  searchText: string;
 
   title = new FormControl('');
   year = new FormControl('');
   plot = new FormControl('');
 
-  //** Empty anonymous film object - used when inserting new record */
-  emptyFilm = {
-    id: "0",
-    title: "",
-    year: "",
-    rated: "",
-    released: "",
-    runtime: "",
-    genre: "",
-    director: "",
-    writer: "",
-    actors: "",
-    plot: "",
-    language: "",
-    country: "",
-    awards: "",
-    poster: "",
-    metascore: "",
-    imdbRating: "",
-    imdbVotes: "",
-    imdbID: "",
-    type: "",
-    response: "",
-    images: [
-      {
-        "id": 0,
-        "imageURL": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Nicolas_Cage_Deauville_2013.jpg/220px-Nicolas_Cage_Deauville_2013.jpg"
-      }
-    ]
-  };
+  faTrash = faTrash;
+  faPenToSquare = faPenToSquare;
+  faFloppyDisk = faFloppyDisk;
 
   constructor(private apiService: ApiService, private modalService: NgbModal, private toastr: ToastrService) { }
 
@@ -77,13 +53,22 @@ export class FilmListComponent implements OnInit {
   //** Open the modal to prompt for title and on success refresh the film list */
   onAdd(): void {
     if (this.title.value !== null && this.year !== null && this.plot !== null) {
-      this.emptyFilm = {...this.emptyFilm, title: this.title.value?.toString(), year: this.year.value?.toString() ?? "", plot: this.plot.value?.toString() ?? ""}
+      let addFilm: Film = new Film();
+
+      addFilm = {
+        ...addFilm,
+        title: this.title.value?.toString(),
+        year: this.year.value?.toString() ?? "",
+        plot: this.plot.value?.toString() ?? "",
+        // insert placeholder image
+        images: [{id: 0, imageURL: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Nicolas_Cage_Deauville_2013.jpg/220px-Nicolas_Cage_Deauville_2013.jpg"}]
+      }
 
       // call the api service to write this film away
-      this.apiService.addFilm(this.emptyFilm)
+      this.apiService.addFilm(addFilm)
         .subscribe(
           response => {
-            this.toastr.success("Film added successfully!", "Success");         
+            this.toastr.success("Film added successfully!", "Success");
             this.resetFields();
             // refresh the film list
             this.getFilms();
@@ -96,7 +81,7 @@ export class FilmListComponent implements OnInit {
   }
 
   //** Update film with demo data */
-  onUpdate(film: any) {
+  onUpdate(film: Film) {
     const modal = this.modalService.open(FilmModalComponent);
 
     // pass the selected film to the modal
@@ -112,7 +97,7 @@ export class FilmListComponent implements OnInit {
   }
 
   //** Delete the selected film and then refesh the film list */
-  onDelete(filmId: any): void {
+  onDelete(filmId: number): void {
     this.apiService.deleteFilm(filmId)
       .subscribe(
         response => {

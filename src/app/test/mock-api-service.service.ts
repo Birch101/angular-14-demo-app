@@ -1,47 +1,29 @@
 import { Observable, of } from "rxjs";
+import { Film } from "../models/film-model";
+import { Title } from "@angular/platform-browser";
 
 //** Mock class for the ApiService */
 export class MockApiService {
 
-    mockFilm = {
-        id: "1",
-        title: "A film",
-        year: "2001",
-        rated: "",
-        released: "",
-        runtime: "",
-        genre: "",
-        director: "",
-        writer: "",
-        actors: "",
-        plot: "A test plot",
-        language: "",
-        country: "",
-        awards: "",
-        poster: "",
-        metascore: "",
-        imdbRating: "",
-        imdbVotes: "",
-        imdbID: "",
-        type: "film",
-        response: "",
-        images: [
-            {
-                "id": 0,
-                "imageURL": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Nicolas_Cage_Deauville_2013.jpg/220px-Nicolas_Cage_Deauville_2013.jpg"
-            }
-        ]
-    };
+    private mockFilm: Film = new Film();
 
-    getFilms(): Observable<any> {
+    public constructor() {
+        this.mockFilm = new Film();
+        this.mockFilm.title = 'A film';
+        this.mockFilm.year = '2001';
+        this.mockFilm.plot = 'Test plot';
+        this.mockFilm.type = 'film';
+    }
+
+    getFilms(): Observable<Film[]> {
         return of([this.mockFilm]);
     }
 
-    addFilm(film: any): Observable<any> {
+    addFilm(film: Film): Observable<Film> {
         return of(this.mockFilm);
     }
 
-    updateFilm(film: any): Observable<any> {
+    updateFilm(film: Film): Observable<Film> {
         return of(this.mockFilm);
     }
 

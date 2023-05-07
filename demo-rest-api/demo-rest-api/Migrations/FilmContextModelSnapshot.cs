@@ -24,84 +24,81 @@ namespace demo_rest_api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Actors")
-                        .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Awards")
-                        .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
-                        .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Director")
-                        .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Genre")
-                        .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Language")
-                        .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Metascore")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("Metascore")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Plot")
                         .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Poster")
-                        .IsRequired()
+                        .HasMaxLength(2048)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Rated")
-                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Released")
-                        .IsRequired()
+                    b.Property<DateTime?>("Released")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Response")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<bool?>("Response")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<string>("Runtime")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("RuntimeMinutes")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Writer")
-                        .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Year")
-                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("imdbID")
-                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("imdbRating")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<double?>("imdbRating")
+                        .HasColumnType("REAL");
 
-                    b.Property<string>("imdbVotes")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("imdbVotes")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -118,6 +115,7 @@ namespace demo_rest_api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageURL")
+                        .HasMaxLength(2048)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

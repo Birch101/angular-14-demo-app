@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Film } from '../models/film-model';
 
 @Pipe({
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(films: any[], searchText: string): any[] {
+  transform(films: Film[], searchText: string): Film[] {
     if (!films) {
       return [];
     }

@@ -8,6 +8,7 @@ import { FormsModule, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { FilterPipe } from 'src/app/pipes/filter.pipe';
 import { ApiService } from 'src/app/services/api-service.service';
 import { MockApiService } from '../../test/mock-api-service.service'
+import { Film } from 'src/app/models/film-model';
 
 describe('FilmListComponent', () => {
   let component: FilmListComponent;
@@ -47,7 +48,7 @@ describe('FilmListComponent', () => {
   describe('onAdd', () => {
     it('ToastrService called on successful add', () => {   
       component.onAdd();
-
+//
       expect(mockToastrService.success).toHaveBeenCalled();
 
       expect(component).toBeTruthy();
@@ -56,7 +57,7 @@ describe('FilmListComponent', () => {
 
   describe('onUpdate', () => {
     it('ToastrService called on successful update', () => {
-      component.onUpdate(null);
+      component.onUpdate(new Film());
 
       expect(component).toBeTruthy();
     });
@@ -64,7 +65,7 @@ describe('FilmListComponent', () => {
 
   describe('onDelete', () => {
     it('ToastrService called on successful delete', () => {
-      component.onDelete(null);
+      component.onDelete(1);
 
       expect(mockToastrService.success).toHaveBeenCalled();
 

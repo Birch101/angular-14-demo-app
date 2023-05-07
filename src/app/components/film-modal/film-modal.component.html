@@ -6,7 +6,7 @@
         <div class="mb-3">
             <label for="title">Title</label>
             <div class="input-group">
-                <input required id="title" class="form-control" type="text" [formControl]="title" />
+                <input required maxlength=100 id="title" class="form-control" type="text" [formControl]="title" />
             </div>
             <p *ngIf="title.invalid && (title.dirty || title.touched)">
                 <small class="validation-error-text">Title is required</small>

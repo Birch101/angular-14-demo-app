@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockApiService } from 'src/app/test/mock-api-service.service';
 import { ApiService } from 'src/app/services/api-service.service';
+import { Film } from 'src/app/models/film-model';
 
 describe('FilmModalComponent', () => {
   let component: FilmModalComponent;
@@ -14,6 +15,7 @@ describe('FilmModalComponent', () => {
   let mockToastrService = jasmine.createSpyObj(['success', 'error']);
   let mockApiService = new MockApiService();
   let mockModalService = jasmine.createSpyObj(['dismissAll']);
+  let testFilm = new Film();
 
   beforeEach(async () => {
 
@@ -31,6 +33,11 @@ describe('FilmModalComponent', () => {
     fixture = TestBed.createComponent(FilmModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
+    testFilm.title = 'Test';
+    testFilm.type = 'film';
+    testFilm.year = '2000';
+    testFilm.plot = 'This is the plot';
   });
 
   it('should create', () => {
@@ -43,7 +50,7 @@ describe('FilmModalComponent', () => {
       component.year.setValue('2001');
       component.plot.setValue('Plot');
 
-      component.filmToUpdate = {title: 'Test', type: 'film', year: "2001", plot: 'Test plot'}
+      component.filmToUpdate = testFilm;
 
       component.onSave();
 
@@ -65,10 +72,12 @@ describe('FilmModalComponent', () => {
 
   describe('populateForm', () => {
     it('form controls are populated with the correct initial values for a film', () => {
-      component.filmToUpdate = { title: 'test', type: 'film', year: '2000', plot: 'This is the plot' }
+      component.filmToUpdate = testFilm;
+      component.filmToUpdate.type = 'film';
+
       component.populateForm()
 
-      expect(component.title.value).toBe("test");
+      expect(component.title.value).toBe("Test");
       expect(component.year.value).toBe("2000");
       expect(component.plot.value).toBe("This is the plot");
 
@@ -78,10 +87,11 @@ describe('FilmModalComponent', () => {
     });
 
     it('form controls are populated with the correct initial values for a series', () => {
-      component.filmToUpdate = { title: 'test', type: 'series', year: '2000-', plot: 'This is the plot' }
+      component.filmToUpdate = testFilm;
+      component.filmToUpdate.type = 'series';
       component.populateForm()
 
-      expect(component.title.value).toBe("test");
+      expect(component.title.value).toBe("Test");
       expect(component.year.value).toBe("2000");
       expect(component.plot.value).toBe("This is the plot");
 
@@ -95,7 +105,9 @@ describe('FilmModalComponent', () => {
     });
 
     it('title from control marked as invalid when not populated', () => {
-      component.filmToUpdate = { title: '', type: 'series', year: '2000-', plot: 'This is the plot' }
+      component.filmToUpdate = testFilm;
+      component.filmToUpdate.title = '';
+
       component.populateForm()
 
       expect(component.title.value).toBe("");
@@ -108,7 +120,9 @@ describe('FilmModalComponent', () => {
     });
 
     it('year from control marked as invalid when not populated', () => {
-      component.filmToUpdate = { title: 'Test', type: 'series', year: '', plot: 'This is the plot' }
+      component.filmToUpdate = testFilm;
+      component.filmToUpdate.year = '';
+
       component.populateForm()
 
       expect(component.title.value).toBe("Test");
@@ -121,11 +135,13 @@ describe('FilmModalComponent', () => {
     });
 
     it('year from control marked as invalid when < 0', () => {
-      component.filmToUpdate = { title: 'Test', type: 'series', year: '-1', plot: 'This is the plot' }
+      component.filmToUpdate = testFilm;
+      component.filmToUpdate.year = '-1';
+
       component.populateForm()
 
       expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("");
+      expect(component.year.value).toBe("-1");
       expect(component.plot.value).toBe("This is the plot");
 
       expect(component.title.pristine).toBeTrue();
@@ -134,7 +150,9 @@ describe('FilmModalComponent', () => {
     });
 
     it('year from control marked as invalid when > 9999', () => {
-      component.filmToUpdate = { title: 'Test', type: 'series', year: '99999', plot: 'This is the plot' }
+      component.filmToUpdate = testFilm;
+      component.filmToUpdate.year = '99999';
+
       component.populateForm()
 
       expect(component.title.value).toBe("Test");
@@ -146,12 +164,14 @@ describe('FilmModalComponent', () => {
       expect(component.plot.pristine).toBeTrue();
     });
 
-    it('plot from control marked as invalid when not popualated', () => {
-      component.filmToUpdate = { title: 'Test', type: 'series', year: '2001', plot: '' }
+    it('plot from control marked as invalid when not populated', () => {
+      component.filmToUpdate = testFilm;
+      component.filmToUpdate.plot = '';
+      
       component.populateForm()
 
       expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("2001");
+      expect(component.year.value).toBe("2000");
       expect(component.plot.value).toBe("");
 
       expect(component.title.pristine).toBeTrue();

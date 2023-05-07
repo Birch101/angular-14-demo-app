@@ -6,26 +6,63 @@ namespace demo_rest_api.Entities
   {
     [Key]
     public int Id { get; set; }
+
+    [Required]
+    [MaxLength(100)]
     public string Title { get; set; } = string.Empty;
-    public string Year { get; set; } = string.Empty;
-    public string Rated { get; set; } = string.Empty;
-    public string Released { get; set; } = string.Empty;
-    public string Runtime { get; set; } = string.Empty;
-    public string Genre { get; set; } = string.Empty;
-    public string Director { get; set; } = string.Empty;
-    public string Writer { get; set; } = string.Empty;
-    public string Actors { get; set; } = string.Empty;
-    public string Plot { get; set; } = string.Empty;
-    public string Language { get; set; } = string.Empty;
-    public string Country { get; set; } = string.Empty;
-    public string Awards { get; set; } = string.Empty;
-    public string Poster { get; set; } = string.Empty;
-    public string Metascore { get; set; } = string.Empty;
-    public string imdbRating { get; set; } = string.Empty;
-    public string imdbVotes { get; set; } = string.Empty;
-    public string imdbID { get; set; } = string.Empty;
+
+    [MaxLength(100)]
+    public string? Year { get; set; }
+
+    [MaxLength(50)]
+    public string? Rated { get; set; }
+
+    public DateTime? Released { get; set; }
+
+    public int? RuntimeMinutes { get; set; }
+
+    [MaxLength(200)]
+    public string? Genre { get; set; }
+
+    [MaxLength(200)]
+    public string? Director { get; set; }
+
+    [MaxLength(200)]
+    public string? Writer { get; set; }
+
+    [MaxLength(200)]
+    public string? Actors { get; set; }
+
+    [Required]
+    [MaxLength(200)]
+    public string? Plot { get; set; }
+
+    [MaxLength(200)]
+    public string? Language { get; set; }
+
+    [MaxLength(200)]
+    public string? Country { get; set; }
+
+    [MaxLength(200)]
+    public string? Awards { get; set; }
+
+    [MaxLength(2048)]
+    public string? Poster { get; set; }
+
+    [Range(0, 100)]
+    public int? Metascore { get; set; }
+
+    [Range(0, 10)]
+    public double? imdbRating { get; set; }
+    public int? imdbVotes { get; set; }
+
+    [MaxLength(50)]
+    public string? imdbID { get; set; }
+
+    [Required]
+    [MaxLength(20)]
     public string Type { get; set; } = string.Empty;
-    public string Response { get; set; } = string.Empty;
+    public bool? Response { get; set; }
     public List<FilmImage> Images { get; set; } = new List<FilmImage>();
   }
 }
