@@ -23,4 +23,4 @@ The Angular application is automatically deployed to this URL:
 - https://angular-14-demo.azurewebsites.net
 
 The REST API is automatically deployed to this URL:
-- https://rest-api-demo-cb.azurewebsites.net
+- https://rest-api-demo-cb.azurewebsites.net/swagger/index.html
