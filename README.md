@@ -10,6 +10,7 @@ This is a simple project to allow film data to be created, read, updated and del
 ## Running
 
 Clone the REST API from https://github.com/Birch101/rest-api-demo. This API can then be run from Visual Studio.
+
 To run the Angular applicaton first run the 'npm install' command followed by the 'ng serve' command - this will run at localhost:4200. Note if the API runs on a port other than '44376' you will need to update the 'apiUrl' config in the 'environment.development.ts' file to point at the same port where the API is running.
 
 ## Database creation
