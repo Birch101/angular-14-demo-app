@@ -1,67 +1,79 @@
-<h2 class="film-title">TV & Films</h2>
-
-<div class="row">
-    <div class="form-group">
-        <input type="email" class="form-control search-bar" id="search-text" aria-describedby="search-text" 
-          [(ngModel)]="searchText" placeholder="Enter text to search" 
-          autofocus>
-      </div>
-</div>
-<div class="d-flex flex-wrap">
-    <div class="card film-card m-2">
-        <div class="card-header film-card-header" >
-            <h5>Add Film</h5>
-        </div>
-        <div class="card-body">
-            <div class="mb-3">
-                <label for="title">Title</label>
-                <div class="input-group">
-                    <input id="title" required maxlength=100 class="form-control" type="text" [formControl]="title" />
-                </div>
-                <p *ngIf="title.invalid && (title.dirty || title.touched)">
-                    <small class="validation-error-text">Title is required</small>
-                </p>
-                <label for="year">Year</label>
-                <div class="input-group">
-                    <input id="year" required min=0 max=9999 maxlength=4 class="form-control" type="number"
-                        [formControl]="year" />
-                </div>
-                <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)">
-                    <small class="validation-error-text">Year is required</small>
-                </p>
-                <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)">
-                    <small class="validation-error-text">Year must be between 0 and 9999</small>
-                </p>
-                <label for="plot">Plot</label>
-                <div class="input-group">
-                    <textarea id="plot" required maxlength="300" class="form-control" type="text" [formControl]="plot"> </textarea>
-                </div>
-                <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
-                    <small class="validation-error-text">Plot is required</small>
-                </p>
-            </div>
-        </div>
-        <div class="card-footer text-end">
-            <button (click)="onAdd()" [disabled]="title.invalid || year.invalid || plot.invalid" class="btn btn-primary"><fa-icon class="icon" [icon]="faFloppyDisk"></fa-icon>Save</button>
+<ng-template [ngIf]="loading">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status" style="width: 5em; height: 5em;">
         </div>
     </div>
+    <div class="d-flex justify-content-center" style="margin-top: 1em;">
+        Loading...
+    </div>
+</ng-template>
 
-    <div *ngFor="let film of filmsList | filter: searchText">
+<ng-template [ngIf]="!loading">
+    <h2 class="film-title">TV & Films</h2>
+
+    <div class="row">
+        <div class="form-group">
+            <input type="email" class="form-control search-bar" id="search-text" aria-describedby="search-text"
+                [(ngModel)]="searchText" placeholder="Enter text to search" autofocus>
+        </div>
+    </div>
+    <div class="d-flex flex-wrap">
         <div class="card film-card m-2">
-            <div class="card-header film-card-header">
-                <h5 class="film-title-text-truncate" ngbTooltip="{{film.title}} ({{film.year}})">{{film.title}} ({{film.year}})</h5>
+            <div class="card-header film-card-header" >
+                <h5>Add Film</h5>
             </div>
-            <img class="card-img-top film-card-image" src="{{film.images !== null && film.images !== undefined && film.images.length > 0 ? film.images[0].imageURL : ''}}" alt="Film image placeholder">
-            <div class="card-body film-card-plot film-plot-text-truncate" [ngbTooltip]="(film.plot.length > 260 ? film.plot : '')">
-                {{film.plot}}
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="title">Title</label>
+                    <div class="input-group">
+                        <input id="title" required maxlength=100 class="form-control" type="text" [formControl]="title" />
+                    </div>
+                    <p *ngIf="title.invalid && (title.dirty || title.touched)">
+                        <small class="validation-error-text">Title is required</small>
+                    </p>
+                    <label for="year">Year</label>
+                    <div class="input-group">
+                        <input id="year" required min=0 max=9999 maxlength=4 class="form-control" type="number"
+                            [formControl]="year" />
+                    </div>
+                    <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)">
+                        <small class="validation-error-text">Year is required</small>
+                    </p>
+                    <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)">
+                        <small class="validation-error-text">Year must be between 0 and 9999</small>
+                    </p>
+                    <label for="plot">Plot</label>
+                    <div class="input-group">
+                        <textarea id="plot" required maxlength="300" class="form-control" type="text" [formControl]="plot"> </textarea>
+                    </div>
+                    <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
+                        <small class="validation-error-text">Plot is required</small>
+                    </p>
+                </div>
             </div>
             <div class="card-footer text-end">
-                <button id="{{film.id}}" (click)="onUpdate(this.film)"
-                    class="btn btn-primary float-right update-button"><fa-icon class="icon" [icon]="faPenToSquare"></fa-icon>Update</button>
-                <button id="{{film.id}}" (click)="onDelete(this.film.id)"
-                    class="btn btn-danger float-right"><fa-icon class="icon" [icon]="faTrash"></fa-icon>Delete</button>
+                <button (click)="onAdd()" [disabled]="title.invalid || year.invalid || plot.invalid" class="btn btn-primary"><fa-icon class="icon" [icon]="faFloppyDisk"></fa-icon>Save</button>
             </div>
         </div>
 
+        <div *ngFor="let film of filmsList | filter: searchText">
+            <div class="card film-card m-2">
+                <div class="card-header film-card-header">
+                    <h5 class="film-title-text-truncate" ngbTooltip="{{film.title}} ({{film.year}})">{{film.title}} ({{film.year}})</h5>
+                </div>
+                <img class="card-img-top film-card-image" src="{{film.images !== null && film.images !== undefined && film.images.length > 0 ? film.images[0].imageURL : ''}}" alt="Film image placeholder">
+                <div class="card-body film-card-plot film-plot-text-truncate" [ngbTooltip]="(film.plot.length > 260 ? film.plot : '')">
+                    {{film.plot}}
+                </div>
+                <div class="card-footer text-end">
+                    <button id="{{film.id}}" (click)="onUpdate(this.film)"
+                        class="btn btn-primary float-right update-button"><fa-icon class="icon" [icon]="faPenToSquare"></fa-icon>Update</button>
+                    <button id="{{film.id}}" (click)="onDelete(this.film.id)"
+                        class="btn btn-danger float-right"><fa-icon class="icon" [icon]="faTrash"></fa-icon>Delete</button>
+                </div>
+            </div>
+    
+        </div>
     </div>
-</div>
+
+</ng-template>

@@ -28,6 +28,7 @@ export class FilmListComponent implements OnInit {
   faTrash = faTrash;
   faPenToSquare = faPenToSquare;
   faFloppyDisk = faFloppyDisk;
+  loading = false;
 
   constructor(private apiService: ApiService, private modalService: NgbModal, private toastr: ToastrService) { }
 
@@ -39,12 +40,16 @@ export class FilmListComponent implements OnInit {
 
   //** Get all the films to display */
   getFilms() {
+    this.loading = true;
+
     this.apiService.getFilms()
       .subscribe(
         response => {
           this.filmsList = response;
+          this.loading = false;
         },
         error => {
+          this.loading = false;
           this.toastr.error("Failed to display films.", "Failure");
           console.log(error);
         });
