@@ -18,7 +18,7 @@ To run the Angular applicaton first run the 'npm install' command followed by th
 The SQLite database is checked in with the code, but if required could be generated again by running the 'update-database' command from within Visual Studio.
 
 ## Deployment
-The Angular application is automatically deployed to this URL via a yaml script included in this repository:
+The Angular application is automatically deployed to an Azure App Service at this URL via a yaml script included in this repository:
 - https://angular-14-demo.azurewebsites.net
 
 This Angular application makes use of following API:
