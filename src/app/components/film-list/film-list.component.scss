@@ -1,6 +1,5 @@
 .search-bar {
     max-width: 56.1em;
-    margin-left: 0.5em;
     background: var(--searchTextBoxBgColor);
     color: var(--textColor);
 }
@@ -8,6 +7,19 @@
 .no-matches-text {
     margin-top: 2em;
     margin-left: 2em;
+}
+
+.sort-by-control {
+    padding-left: 0em;
+  
+    select {
+        height: 38px;
+        width: 100%;
+        max-width: 9.4em;
+        border: 1px solid #ced4da;
+        background: var(--searchTextBoxBgColor);
+        color: var(--textColor);
+    }
 }
 
 main {
