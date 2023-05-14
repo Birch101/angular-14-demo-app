@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api-service.service';
 import { ToastrService } from 'ngx-toastr';
-import { FormControl } from '@angular/forms';
 import { Film } from 'src/app/models/film-model';
 
 @Component({
@@ -15,10 +14,6 @@ export class FilmListComponent implements OnInit {
   filmsList: Film[] = [];
 
   searchText: string;
-
-  title = new FormControl('');
-  year = new FormControl('');
-  plot = new FormControl('');
 
   loading = false;
 

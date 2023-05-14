@@ -5,6 +5,11 @@
     color: var(--textColor);
 }
 
+.no-matches-text {
+    margin-top: 2em;
+    margin-left: 2em;
+}
+
 main {
     display: flex;
     height: 100vh;

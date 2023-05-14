@@ -18,6 +18,9 @@
     <div class="d-flex flex-wrap">
         <app-add-film-card (filmDataChange)="handleFilmDataChange($event)"></app-add-film-card>
 
+        <div class="no-matches-text" *ngIf="(filmsList | filter: searchText).length === 0">
+            <h5>No matches found</h5>
+        </div>
         <div *ngFor="let film of filmsList | filter: searchText">
             <app-film-card [film]="film" (filmDataChange)="handleFilmDataChange($event)"></app-film-card>   
         </div>
