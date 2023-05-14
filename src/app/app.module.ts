@@ -13,13 +13,17 @@ import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FilmCardComponent } from './components/film-card/film-card/film-card.component';
+import { AddFilmCardComponent } from './components/add-film-card/add-film-card/add-film-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FilmListComponent,
     FilmModalComponent,
-    FilterPipe
+    FilterPipe,
+    FilmCardComponent,
+    AddFilmCardComponent
   ],
   imports: [
     BrowserModule,
