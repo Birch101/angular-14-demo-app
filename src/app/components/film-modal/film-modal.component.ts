@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/services/api-service.service';
 @Component({
   selector: 'app-film-modal',
   templateUrl: './film-modal.component.html',
-  styleUrls: ['./film-modal.component.css']
+  styleUrls: ['./film-modal.component.scss']
 })
 export class FilmModalComponent implements OnInit {
 
@@ -71,6 +71,19 @@ export class FilmModalComponent implements OnInit {
     this.title.markAsPristine();
     this.year.markAsPristine();
     this.plot.markAsPristine();
+  }
+
+  //** Return true to disable save if any field invalid or no fields have been touched */
+  isSaveDisabled() {
+    if (this.title.invalid || this.year.invalid || this.plot.invalid) {
+      return true;
+    }
+
+    if (!this.title.dirty && !this.year.dirty && !this.plot.dirty) {
+      return true;
+    }
+
+    return false;
   }
 
   //** Construct an appropriate year string based on if it is a series or not */

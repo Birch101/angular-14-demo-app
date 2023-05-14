@@ -1,4 +1,4 @@
-import { FilmImage } from "./film-image-modal";
+import { FilmImage } from "./film-image-model";
 
 export class Film {
     id: number;

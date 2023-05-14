@@ -1,0 +1,36 @@
+$bgColor_light: white;
+$bgColor_dark: #282828;
+
+$textColor_light: black;
+$textColor_dark: white;
+
+$borderColor_light: black;
+$borderColor_dark: white;
+
+@mixin lighten() {
+  --bgColor: #{$bgColor_light};
+  --cardBgColor: #00000008;
+  --textColor: #{$textColor_light};
+  --borderColor: #{$borderColor_light};
+  --toolbarBgColor: #1976d2;
+  --searchTextBoxBgColor: white;
+  --formTextBoxBgColor: white;
+}
+
+@mixin darken() {
+  --bgColor: #{$bgColor_dark};
+  --cardBgColor: #505050;
+  --textColor: #{$textColor_dark};
+  --borderColor: #{$borderColor_dark};
+  --toolbarBgColor: #505050;
+  --searchTextBoxBgColor: #282828;
+  --formTextBoxBgColor: #505050;
+}
+
+body.dark {
+  @include darken();
+  background-color: #282828;
+}
+body.light {
+  @include lighten();
+}
