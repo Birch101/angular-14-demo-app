@@ -1,5 +1,7 @@
 # Angular14DemoApp
 
+[![Build and Deploy to Azure App Service](https://github.com/Birch101/angular-14-demo-app/actions/workflows/node-build-deploy.yml/badge.svg)](https://github.com/Birch101/angular-14-demo-app/actions/workflows/node-build-deploy.yml)
+
 ## Overview
 
 This is a simple project to allow film data to be created, read, updated and deleted. It consists of the following parts:
