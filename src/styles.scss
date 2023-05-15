@@ -34,3 +34,32 @@ body.dark {
 body.light {
   @include lighten();
 }
+
+.film-card {
+  margin: 1em;
+  width: 18rem;
+  min-height: 36em;
+}
+
+.film-card-header {
+  min-height: 5.5em;
+  background-color: var(--cardBgColor);
+  color: var(--textColor);
+}
+
+.film-card-footer {
+  background-color: var(--cardBgColor);
+  color: var(--textColor);
+}
+
+.film-form-control {
+  background: var(--formTextBoxBgColor);
+  color: var(--textColor);
+}
+
+.validation-error {
+  text-align: right;
+  .validation-error-text {
+      color: red
+  }
+}

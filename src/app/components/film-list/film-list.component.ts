@@ -14,10 +14,13 @@ export class FilmListComponent implements OnInit {
   //** List of films to display */
   filmsList: Film[] = [];
 
+  //** Text entered to search on */
   searchText: string;
 
+  //** Is currently loading data */
   loading = false;
 
+  //** TODO: Should come from config / database */
   sorts = [
     "Sort By",
     "Title Asc",
@@ -26,7 +29,7 @@ export class FilmListComponent implements OnInit {
     "Year Desc"
   ];
 
-  form = new FormGroup({
+  sortOrderform = new FormGroup({
     sortOrder: new FormControl("Sort By"),
   });
 
@@ -63,17 +66,19 @@ export class FilmListComponent implements OnInit {
 
   //** Applies an appropriate sort based on selection and returns sorted list of films */
   applySort() {
-    switch (this.form.getRawValue().sortOrder) {
-      case "Title Asc": {
+    // TODO: if these values were localised this switch would not match
+    // it should ideally work off a fixed id/index of some sort
+    switch (this.sortOrderform.getRawValue().sortOrder?.toLowerCase()) {
+      case "title asc": {
         return this.filmsList.sort(this.createCompareFn<Film>("title", "asc"));
       }
-      case "Title Desc": {
+      case "title desc": {
         return this.filmsList.sort(this.createCompareFn<Film>("title", "desc"));
       }
-      case "Year Asc": {
+      case "year asc": {
         return this.filmsList.sort(this.createCompareFn<Film>("year", "asc"));
       }
-      case "Year Desc": {
+      case "year desc": {
         return this.filmsList.sort(this.createCompareFn<Film>("year", "desc"));
       }
       default: {

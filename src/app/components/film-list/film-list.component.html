@@ -16,8 +16,8 @@
                     [(ngModel)]="searchText" placeholder="Enter text to search" autofocus>
             </div>
             <div class="col-2 sort-by-control">
-                <form [formGroup]="form">
-                    <select formControlName="sortOrder" (change)="onSelectChange($event)">
+                <form [formGroup]="sortOrderform">
+                    <select formControlName="sortOrder" class="rounded" (change)="onSelectChange($event)">
                         <option *ngFor="let sort of sorts" [ngValue]="sort">
                             {{ sort }}
                         </option>

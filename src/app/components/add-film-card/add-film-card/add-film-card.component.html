@@ -8,26 +8,27 @@
             <div class="input-group">
                 <input id="title" required maxlength=100 class="form-control film-form-control" type="text" [formControl]="title" />
             </div>
-            <p *ngIf="title.invalid && (title.dirty || title.touched)">
-                <small class="validation-error-text">Title is required</small>
+            <p class="d-flex justify-content-between validation-error">
+                <small>{{title.value?.length}} / 100</small>
+                <small *ngIf="title.invalid && (title.dirty || title.touched)" class="validation-error-text" >Title is required</small>
             </p>
             <label for="year">Year</label>
             <div class="input-group">
-                <input id="year" required min=0 max=9999 maxlength=4 class="form-control film-form-control" type="number"
-                    [formControl]="year" />
+                <input id="year" required min=0 max=9999 maxlength=4 class="form-control film-form-control" type="number" [formControl]="year" />
             </div>
-            <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)">
+            <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)" class="validation-error">
                 <small class="validation-error-text">Year is required</small>
             </p>
-            <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)">
+            <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)" class="validation-error">
                 <small class="validation-error-text">Year must be between 0 and 9999</small>
             </p>
             <label for="plot">Plot</label>
-            <div class="input-group">
+            <div class="input-group validation-error">
                 <textarea id="plot" required maxlength="300" class="form-control film-form-control" type="text" [formControl]="plot"> </textarea>
             </div>
-            <p *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)">
-                <small class="validation-error-text">Plot is required</small>
+            <p class="d-flex justify-content-between validation-error">
+                <small>{{plot.value?.length}} / 300</small>
+                <small *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)" class="validation-error-text">Plot is required</small>
             </p>
         </div>
     </div>

@@ -1,13 +1,3 @@
-.film-title {
-    margin-left: 0.2em;
-    color: var(--textColor);
-}
-
-.film-card {
-    margin: 1em;
-    width: 18rem;
-    min-height: 36em;
-}
 
 .film-card-header {
     min-height: 5.5em;
@@ -21,34 +11,13 @@
     color: var(--textColor);
 }
 
-.film-card-add {
-    background-color: var(--cardBgColor);
-    color: var(--textColor);
-}
-
 .film-card-image {
     min-height: 190px;
     max-height: 190px;
 }
 
-.film-card-footer {
-    background-color: var(--cardBgColor);
-    color: var(--textColor);
-}
-
 .update-button {
     margin-right: 0.3em;
-}
-
-.search-bar {
-    max-width: 56.1em;
-    margin-left: 0.5em;
-    background: var(--searchTextBoxBgColor);
-    color: var(--textColor);
-}
-
-.validation-error-text {
-    color: red
 }
 
 .film-title-text-truncate {
@@ -69,19 +38,4 @@
 
 .icon {
     margin-right: 0.3em;
-}
-
-.film-form-control {
-    background: var(--formTextBoxBgColor);
-    color: var(--textColor);
-}
-
-main {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: var(--bgColor);
-    color: var(--textColor);
 }
