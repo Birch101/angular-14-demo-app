@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Film } from 'src/app/models/film-model';
 import { ApiService } from 'src/app/services/api-service.service';
-import { FilmModalComponent } from '../../film-modal/film-modal.component';
+import { FilmModalComponent } from '../film-modal/film-modal.component';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
