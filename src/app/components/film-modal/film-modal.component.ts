@@ -59,6 +59,7 @@ export class FilmModalComponent implements OnInit {
     // set the title to the passed in value
     this.title.setValue(this.filmToUpdate?.title);
 
+    // TODO: Ideally would change the database structure so from and to years could be defined rather than all in one string with this demo data
     // For a series pick out the first year in a '2001 - 2002' type string
     if (this.filmToUpdate?.type.toLowerCase() === 'series') {
       this.year.setValue(this.extractYearValue(this.filmToUpdate.year.toString()));
