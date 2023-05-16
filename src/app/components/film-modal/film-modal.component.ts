@@ -37,15 +37,16 @@ export class FilmModalComponent implements OnInit {
     }
 
     this.apiService.updateFilm(this.filmToUpdate)
-      .subscribe(
-        response => {
-          this.toastr.success("Film updated successfully!", "Success");
-          this.modalService.dismissAll();
+      .subscribe({
+        complete: () => {
+           this.toastr.success("Film updated successfully!", "Success");
+           this.modalService.dismissAll();
         },
-        error => {
+        error: (e) => {
           this.toastr.error("Failed to update film.", "Failure");
-          console.log(error);
-        });
+          console.log(e);
+        }
+      })
   }
 
   //** Close the modal. */

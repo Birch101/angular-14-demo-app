@@ -39,17 +39,18 @@ export class AddFilmCardComponent {
 
       // call the api service to write this film away
       this.apiService.addFilm(addFilm)
-        .subscribe(
-          response => {
+        .subscribe({
+          complete: () => {
             this.toastr.success("Film added successfully!", "Success");
             this.resetFields();
             // refresh the film list
             this.filmDataChange.emit("Added");
           },
-          error => {
+          error: (e) => {
             this.toastr.error("Failed to add film.", "Failure");
-            console.log(error);
-          });
+            console.log(e);
+          }
+        })
     }
   }
 

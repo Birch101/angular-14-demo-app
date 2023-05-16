@@ -46,17 +46,18 @@ export class FilmListComponent implements OnInit {
     this.loading = true;
 
     this.apiService.getFilms()
-      .subscribe(
-        response => {
-          this.filmsList = response;
+    .subscribe({
+      next: (v) => {
+          this.filmsList = v;
           this.filmsList = this.applySort();
           this.loading = false;
-        },
-        error => {
+      },
+      error: (e) => {
           this.loading = false;
           this.toastr.error("Failed to display films.", "Failure");
-          console.log(error);
-        });
+          console.log(e);
+      }
+    })
   }
 
   //** Sort films based on sort selection */

@@ -42,15 +42,16 @@ export class FilmCardComponent {
     //** Delete the selected film and then refesh the film list */
     onDelete(filmId: number): void {
       this.apiService.deleteFilm(filmId)
-        .subscribe(
-          response => {
+      .subscribe({
+        complete: () => {
             this.toastr.success("Film deleted successfully!", "Success");
             this.filmDataChange.emit("Deleted");
-          },
-          error => {
+        },
+        error: (e) => {
             this.toastr.error("Failed to delete film.", "Failure");
-            console.log(error);
-          });
+            console.log(e);
+        }
+      })
     }
 
 }
