@@ -1,0 +1,8 @@
+<label for="{{label}}">{{label}}</label>
+<div class="input-group">
+    <input #input required maxlength={{maxCharacters}} id="{{label}}" class="form-control film-form-control film-modal-control" type="text" [formControl]="formControl"/>
+</div>
+<p class="d-flex justify-content-between validation-error">
+    <small>{{formControl.value?.length}} / {{maxCharacters}}</small>
+    <small *ngIf="formControl.invalid && (formControl.dirty || formControl.touched)" class="validation-error-text" >{{label}} is required</small>
+</p>

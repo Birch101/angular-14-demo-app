@@ -15,6 +15,9 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FilmCardComponent } from './components/film-card/film-card.component';
 import { AddFilmCardComponent } from './components/add-film-card/add-film-card.component';
+import { ValidatedTextFieldComponent } from './components/validated-text-field/validated-text-field.component';
+import { ValidatedNumberFieldComponent } from './components/validated-number-field/validated-number-field.component';
+import { ValidatedTextareaFieldComponent } from './components/validated-textarea-field/validated-textarea-field.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { AddFilmCardComponent } from './components/add-film-card/add-film-card.c
     FilmModalComponent,
     FilterPipe,
     FilmCardComponent,
-    AddFilmCardComponent
+    AddFilmCardComponent,
+    ValidatedTextFieldComponent,
+    ValidatedNumberFieldComponent,
+    ValidatedTextareaFieldComponent
   ],
   imports: [
     BrowserModule,

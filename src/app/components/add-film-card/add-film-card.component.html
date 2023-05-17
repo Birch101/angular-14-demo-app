@@ -4,35 +4,12 @@
     </div>
     <div class="card-body film-card-add">
         <div class="mb-3">
-            <label for="title">Title</label>
-            <div class="input-group">
-                <input id="title" required maxlength=100 class="form-control film-form-control" type="text" [formControl]="title" />
-            </div>
-            <p class="d-flex justify-content-between validation-error">
-                <small>{{title.value?.length}} / 100</small>
-                <small *ngIf="title.invalid && (title.dirty || title.touched)" class="validation-error-text" >Title is required</small>
-            </p>
-            <label for="year">Year</label>
-            <div class="input-group">
-                <input id="year" required min=0 max=9999 maxlength=4 class="form-control film-form-control" type="number" [formControl]="year" />
-            </div>
-            <p *ngIf="year.errors?.['required'] && (year.dirty || year.touched)" class="validation-error">
-                <small class="validation-error-text">Year is required</small>
-            </p>
-            <p *ngIf="(year.errors?.['min'] || year.errors?.['max']) && (year.dirty || year.touched)" class="validation-error">
-                <small class="validation-error-text">Year must be between 0 and 9999</small>
-            </p>
-            <label for="plot">Plot</label>
-            <div class="input-group validation-error">
-                <textarea id="plot" required maxlength="300" class="form-control film-form-control" type="text" [formControl]="plot"> </textarea>
-            </div>
-            <p class="d-flex justify-content-between validation-error">
-                <small>{{plot.value?.length}} / 300</small>
-                <small *ngIf="plot.errors?.['required'] && (plot.dirty || plot.touched)" class="validation-error-text">Plot is required</small>
-            </p>
+            <app-validated-text-field label="Title" [maxCharacters]=100 defaultValue=""></app-validated-text-field>
+            <app-validated-number-field label="Year" [minValue]="0" [maxValue]="9999" defaultValue=""></app-validated-number-field>
+            <app-validated-textarea-field label="Plot" [maxCharacters]="300" defaultValue=""></app-validated-textarea-field>
         </div>
     </div>
     <div class="card-footer film-card-footer text-end">
-        <button (click)="onAdd()" [disabled]="title.invalid || year.invalid || plot.invalid" class="btn btn-primary"><fa-icon class="icon" [icon]="faFloppyDisk"></fa-icon>Save</button>
+        <button (click)="onAdd()" [disabled]="isSaveDisabled()" class="btn btn-primary"><fa-icon class="icon" [icon]="faFloppyDisk"></fa-icon>Save</button>
     </div>
 </div>

@@ -1,39 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Film } from 'src/app/models/film-model';
 import { ApiService } from 'src/app/services/api-service.service';
+import { ValidatedTextFieldComponent } from '../validated-text-field/validated-text-field.component';
+import { ValidatedNumberFieldComponent } from '../validated-number-field/validated-number-field.component';
+import { ValidatedTextareaFieldComponent } from '../validated-textarea-field/validated-textarea-field.component';
 
 @Component({
   selector: 'app-film-modal',
   templateUrl: './film-modal.component.html',
   styleUrls: ['./film-modal.component.scss']
 })
-export class FilmModalComponent implements OnInit {
+export class FilmModalComponent {
 
   //** Passed in film to update */
   @Input() public filmToUpdate: Film;
 
-  public title = new FormControl('');
-  public year = new FormControl('');
-  public plot = new FormControl('');
+  @ViewChild(ValidatedTextFieldComponent) titleField: ValidatedTextFieldComponent;
+  @ViewChild(ValidatedNumberFieldComponent) yearField: ValidatedNumberFieldComponent;
+  @ViewChild(ValidatedTextareaFieldComponent) plotField: ValidatedTextareaFieldComponent;
 
   constructor(private modalService: NgbModal, private apiService: ApiService, private toastr: ToastrService) { }
 
-  //** Display title of film being updated */
-  ngOnInit() {
-    this.populateForm();
-  }
 
   //** Save away changes and close the modal */
   onSave() {
     // set the title to the entered value
     this.filmToUpdate = {
       ...this.filmToUpdate,
-      title: this.title.value?.toString() ?? "",
-      year: this.constructYearValue(this.filmToUpdate.type, this.year.value?.toString() ?? ""),
-      plot: this.plot.value?.toString() ?? ""
+      title: this.titleField.formControl.value?.toString() ?? "",
+      year: this.constructYearValue(this.filmToUpdate.type, this.yearField.formControl.value?.toString() ?? ""),
+      plot: this.plotField.formControl.value?.toString() ?? ""
     }
 
     this.apiService.updateFilm(this.filmToUpdate)
@@ -54,34 +52,17 @@ export class FilmModalComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  //** Populate the form with data from the film selected to update */
-  populateForm() {
-    // set the title to the passed in value
-    this.title.setValue(this.filmToUpdate?.title);
-
-    // TODO: Ideally would change the database structure so from and to years could be defined rather than all in one string with this demo data
-    // For a series pick out the first year in a '2001 - 2002' type string
-    if (this.filmToUpdate?.type.toLowerCase() === 'series') {
-      this.year.setValue(this.extractYearValue(this.filmToUpdate.year.toString()));
-    }
-    else {
-      this.year.setValue(this.filmToUpdate?.year);
-    }
-
-    this.plot.setValue(this.filmToUpdate?.plot);
-
-    this.title.markAsPristine();
-    this.year.markAsPristine();
-    this.plot.markAsPristine();
-  }
-
   //** Return true to disable save if any field invalid or no fields have been touched */
   isSaveDisabled() {
-    if (this.title.invalid || this.year.invalid || this.plot.invalid) {
+    if (!this.titleField || !this.titleField.formControl || !this.yearField || !this.yearField.formControl) {
       return true;
     }
 
-    if (!this.title.dirty && !this.year.dirty && !this.plot.dirty) {
+    if (this.titleField.formControl.invalid || this.yearField.formControl.invalid || this.plotField.formControl.invalid) {
+      return true;
+    }
+
+    if (!this.titleField.formControl.dirty && !this.yearField.formControl.dirty && !this.plotField.formControl.dirty) {
       return true;
     }
 

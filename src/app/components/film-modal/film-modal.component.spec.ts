@@ -1,3 +1,4 @@
+import { ValidatedTextareaFieldComponent } from './../validated-textarea-field/validated-textarea-field.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FilmModalComponent } from './film-modal.component';
@@ -8,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MockApiService } from 'src/app/test/mock-api-service.service';
 import { ApiService } from 'src/app/services/api-service.service';
 import { Film } from 'src/app/models/film-model';
+import { ValidatedTextFieldComponent } from '../validated-text-field/validated-text-field.component';
+import { ValidatedNumberFieldComponent } from '../validated-number-field/validated-number-field.component';
 
 describe('FilmModalComponent', () => {
   let component: FilmModalComponent;
@@ -21,11 +24,11 @@ describe('FilmModalComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, HttpClientModule, ReactiveFormsModule],
-      declarations: [FilmModalComponent],
+      declarations: [FilmModalComponent, ValidatedTextFieldComponent, ValidatedNumberFieldComponent, ValidatedTextareaFieldComponent],
       providers: [
         { provide: ToastrService, useValue: mockToastrService },
-        {provide: ApiService, useValue: mockApiService},
-        {provide: NgbModal, useValue: mockModalService}
+        { provide: ApiService, useValue: mockApiService},
+        { provide: NgbModal, useValue: mockModalService}
       ]
     })
       .compileComponents();
@@ -46,10 +49,6 @@ describe('FilmModalComponent', () => {
 
   describe('onSave', () => {
     it('ToastrService called on successful add', () => {
-      component.title.setValue('Test');
-      component.year.setValue('2001');
-      component.plot.setValue('Plot');
-
       component.filmToUpdate = testFilm;
 
       component.onSave();
@@ -75,108 +74,123 @@ describe('FilmModalComponent', () => {
       component.filmToUpdate = testFilm;
       component.filmToUpdate.type = 'film';
 
-      component.populateForm()
+      component.titleField.formControl.setValue("Test");
+      component.yearField.formControl.setValue("2000");
+      component.plotField.formControl.setValue("This is the plot");
 
-      expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("2000");
-      expect(component.plot.value).toBe("This is the plot");
+      expect(component.titleField.formControl.value).toBe("Test");
+      expect(component.yearField.formControl.value).toBe("2000");
+      expect(component.plotField.formControl.value).toBe("This is the plot");
 
-      expect(component.title.pristine).toBeTrue();
-      expect(component.year.pristine).toBeTrue();
-      expect(component.plot.pristine).toBeTrue();
+      expect(component.titleField.formControl.pristine).toBeTrue();
+      expect(component.yearField.formControl.pristine).toBeTrue();
+      expect(component.plotField.formControl.pristine).toBeTrue();
     });
 
     it('form controls are populated with the correct initial values for a series', () => {
       component.filmToUpdate = testFilm;
       component.filmToUpdate.type = 'series';
-      component.populateForm()
 
-      expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("2000");
-      expect(component.plot.value).toBe("This is the plot");
+      component.titleField.formControl.setValue("Test");
+      component.yearField.formControl.setValue("2000");
+      component.plotField.formControl.setValue("This is the plot");
 
-      expect(component.title.invalid).toBeFalse();
-      expect(component.year.invalid).toBeFalse();
-      expect(component.plot.invalid).toBeFalse();
+      expect(component.titleField.formControl.value).toBe("Test");
+      expect(component.yearField.formControl.value).toBe("2000");
+      expect(component.plotField.formControl.value).toBe("This is the plot");
 
-      expect(component.title.pristine).toBeTrue();
-      expect(component.year.pristine).toBeTrue();
-      expect(component.plot.pristine).toBeTrue();
+      expect(component.titleField.formControl.invalid).toBeFalse();
+      expect(component.yearField.formControl.invalid).toBeFalse();
+      expect(component.plotField.formControl.invalid).toBeFalse();
+
+      expect(component.titleField.formControl.pristine).toBeTrue();
+      expect(component.yearField.formControl.pristine).toBeTrue();
+      expect(component.plotField.formControl.pristine).toBeTrue();
     });
 
     it('title from control marked as invalid when not populated', () => {
       component.filmToUpdate = testFilm;
       component.filmToUpdate.title = '';
 
-      component.populateForm()
+      component.titleField.formControl.setValue("");
+      component.yearField.formControl.setValue("2000");
+      component.plotField.formControl.setValue("This is the plot");
 
-      expect(component.title.value).toBe("");
-      expect(component.year.value).toBe("2000");
-      expect(component.plot.value).toBe("This is the plot");
+      expect(component.titleField.formControl.value).toBe("");
+      expect(component.yearField.formControl.value).toBe("2000");
+      expect(component.plotField.formControl.value).toBe("This is the plot");
 
-      expect(component.title.invalid).toBeTrue();
-      expect(component.year.pristine).toBeTrue();
-      expect(component.plot.pristine).toBeTrue();
+      expect(component.titleField.formControl.invalid).toBeTrue();
+      expect(component.yearField.formControl.pristine).toBeTrue();
+      expect(component.plotField.formControl.pristine).toBeTrue();
     });
 
     it('year from control marked as invalid when not populated', () => {
       component.filmToUpdate = testFilm;
       component.filmToUpdate.year = '';
 
-      component.populateForm()
+      component.titleField.formControl.setValue("Test");
+      component.yearField.formControl.setValue("");
+      component.plotField.formControl.setValue("This is the plot");
 
-      expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("");
-      expect(component.plot.value).toBe("This is the plot");
+      expect(component.titleField.formControl.value).toBe("Test");
+      expect(component.yearField.formControl.value).toBe("");
+      expect(component.plotField.formControl.value).toBe("This is the plot");
 
-      expect(component.title.pristine).toBeTrue();
-      expect(component.year.invalid).toBeTrue();
-      expect(component.plot.pristine).toBeTrue();
+      expect(component.titleField.formControl.pristine).toBeTrue();
+      expect(component.yearField.formControl.invalid).toBeTrue();
+      expect(component.plotField.formControl.pristine).toBeTrue();
     });
 
     it('year from control marked as invalid when < 0', () => {
       component.filmToUpdate = testFilm;
       component.filmToUpdate.year = '-1';
 
-      component.populateForm()
+      component.titleField.formControl.setValue("Test");
+      component.yearField.formControl.setValue("-1");
+      component.plotField.formControl.setValue("This is the plot");
 
-      expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("-1");
-      expect(component.plot.value).toBe("This is the plot");
+      expect(component.titleField.formControl.value).toBe("Test");
+      expect(component.yearField.formControl.value).toBe("-1");
+      expect(component.plotField.formControl.value).toBe("This is the plot");
 
-      expect(component.title.pristine).toBeTrue();
-      expect(component.year.invalid).toBeTrue();
-      expect(component.plot.pristine).toBeTrue();
+      expect(component.titleField.formControl.pristine).toBeTrue();
+      expect(component.yearField.formControl.invalid).toBeTrue();
+      expect(component.plotField.formControl.pristine).toBeTrue();
     });
 
     it('year from control marked as invalid when > 9999', () => {
       component.filmToUpdate = testFilm;
       component.filmToUpdate.year = '99999';
 
-      component.populateForm()
+      component.titleField.formControl.setValue("Test");
+      component.yearField.formControl.setValue("99999");
+      component.plotField.formControl.setValue("This is the plot");
 
-      expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("99999");
-      expect(component.plot.value).toBe("This is the plot");
+      expect(component.titleField.formControl.value).toBe("Test");
+      expect(component.yearField.formControl.value).toBe("99999");
+      expect(component.plotField.formControl.value).toBe("This is the plot");
 
-      expect(component.title.pristine).toBeTrue();
-      expect(component.year.invalid).toBeTrue();
-      expect(component.plot.pristine).toBeTrue();
+      expect(component.titleField.formControl.pristine).toBeTrue();
+      expect(component.yearField.formControl.invalid).toBeTrue();
+      expect(component.plotField.formControl.pristine).toBeTrue();
     });
 
     it('plot from control marked as invalid when not populated', () => {
       component.filmToUpdate = testFilm;
       component.filmToUpdate.plot = '';
-      
-      component.populateForm()
 
-      expect(component.title.value).toBe("Test");
-      expect(component.year.value).toBe("2000");
-      expect(component.plot.value).toBe("");
+      component.titleField.formControl.setValue("Test");
+      component.yearField.formControl.setValue("2000");
+      component.plotField.formControl.setValue("");
 
-      expect(component.title.pristine).toBeTrue();
-      expect(component.year.pristine).toBeTrue();
-      expect(component.plot.invalid).toBeTrue();
+      expect(component.titleField.formControl.value).toBe("Test");
+      expect(component.yearField.formControl.value).toBe("2000");
+      expect(component.plotField.formControl.value).toBe("");
+
+      expect(component.titleField.formControl.pristine).toBeTrue();
+      expect(component.yearField.formControl.pristine).toBeTrue();
+      expect(component.plotField.formControl.invalid).toBeTrue();
     });
 
   })
